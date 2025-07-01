@@ -5,7 +5,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useClienteById } from '@/hooks/useClienteById';
 import { eliminarCredito } from '@/lib/api';
 import CreditoForm from '@/components/CreditoForm';
-import Link from 'next/link';
+
 
 export default function ClienteDetallePage() {
   const { token } = useAuth();
@@ -22,10 +22,11 @@ export default function ClienteDetallePage() {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-2">{cliente.nombre}</h2>
-      <p className="text-gray-300">📍 {cliente.direccion}</p>
-      <p className="text-gray-300">📞 {cliente.telefono}</p>
-      <p className="text-gray-300">🤝 Convenios: {cliente.convenios.join(', ')}</p>
+     <h2 className="text-2xl font-bold mb-2">{cliente.nombre}</h2>
+<p className="text-gray-300">📍 {cliente.direccion}</p>
+<p className="text-gray-300">📞 {cliente.telefono}</p>
+<p className="text-gray-300">🤝 Convenios: {cliente.convenios.join(', ')}</p>
+<p className="text-gray-300">🧓 Tipo de Retiro: {cliente.tipoRetiro}</p>
 
       <h3 className="text-xl mt-6 mb-2 font-semibold">Créditos</h3>
 
@@ -44,6 +45,7 @@ export default function ClienteDetallePage() {
           {cliente.creditos.map((credito, index) => (
             <tr key={index} className="border-b border-[#444]">
               <td className="px-4 py-2">{credito.tipo}</td>
+             
               <td className="px-4 py-2">{credito.financiera}</td>
               <td className="px-4 py-2">{new Date(credito.fechaVenta).toLocaleDateString()}</td>
               <td className="px-4 py-2">{new Date(credito.fechaPrimerDescuento).toLocaleDateString()}</td>

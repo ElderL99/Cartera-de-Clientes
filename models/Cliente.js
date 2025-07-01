@@ -5,6 +5,7 @@ const creditoSchema = new mongoose.Schema({
   fechaVenta: { type: Date, required: true },
   fechaPrimerDescuento: { type: Date, required: true },
   plazo: { type: Number, required: true },
+  
   financiera: {type: String, require:true}
 });
 
@@ -14,7 +15,8 @@ const clienteSchema = new mongoose.Schema({
   telefono: String,
   convenios: [String],
   creditos: [creditoSchema],
-  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  tipoRetiro: { type: String, enum: ['Pensionado', 'Jubilado'], required: true },
 }, { timestamps: true });
 
 export default mongoose.models.Cliente || mongoose.model('Cliente', clienteSchema);

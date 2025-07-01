@@ -8,19 +8,19 @@ import Link from 'next/link';
 export default function ClientesPage() {
   const { token } = useAuth();
   const [tipoFiltro, setTipoFiltro] = useState('');
-  const [convenioFiltro, setConvenioFiltro] = useState(''); // ✅ primero lo declaramos
+  const [convenioFiltro, setConvenioFiltro] = useState('');
   const { clientes, loading, error, refetch } = useClientes(token, {
     tipo: tipoFiltro,
     convenio: convenioFiltro
   });
+
   const [showForm, setShowForm] = useState(false);
-
-
-
+  const [clienteSeleccionado, setClienteSeleccionado] = useState(null);
+  const [showEditar, setShowEditar] = useState(false);
 
   return (
     <div>
-
+      {/* Filtros */}
       <div className="mb-4">
         <label className="text-sm block mb-1">Filtrar por tipo de crédito:</label>
         <select
@@ -54,6 +54,7 @@ export default function ClientesPage() {
         </select>
       </div>
 
+      {/* Título y botón */}
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold">Clientes</h2>
         <button
@@ -64,6 +65,7 @@ export default function ClientesPage() {
         </button>
       </div>
 
+      {/* Crear nuevo cliente */}
       {showForm && (
         <ClienteForm
           onClose={() => setShowForm(false)}
@@ -71,6 +73,19 @@ export default function ClientesPage() {
         />
       )}
 
+      {/* Editar cliente */}
+      {showEditar && clienteSeleccionado && (
+        <ClienteForm
+          cliente={clienteSeleccionado}
+          onClose={() => {
+            setShowEditar(false);
+            setClienteSeleccionado(null);
+          }}
+          onRefresh={refetch}
+        />
+      )}
+
+      {/* Tabla */}
       {loading && <p className="text-white">Cargando...</p>}
       {error && <p className="text-red-500">{error}</p>}
 
@@ -80,8 +95,9 @@ export default function ClientesPage() {
             <th className="px-4 py-2 text-left">Nombre</th>
             <th className="px-4 py-2 text-left">Teléfono</th>
             <th className="px-4 py-2 text-left">Convenios</th>
-            <th className="px-4 py-2 text-left">Acción</th>
             <th className="px-4 py-2 text-left">Tipo</th>
+            <th className="px-4 py-2 text-left">Tipo de Retiro</th>
+            <th className="px-4 py-2 text-left">Acción</th>
 
           </tr>
         </thead>
@@ -91,21 +107,29 @@ export default function ClientesPage() {
               <td className="px-4 py-2">{cliente.nombre}</td>
               <td className="px-4 py-2">{cliente.telefono}</td>
               <td className="px-4 py-2">{cliente.convenios.join(', ')}</td>
-              <td className="px-4 py-2">
+              <td className="px-4 py-2">{cliente.creditos[0]?.tipo || '—'}</td>
+              <td className="px-4 py-2">{cliente.tipoRetiro}</td>
+              <td className="px-4 py-2 space-x-2">
                 <Link
                   href={`/dashboard/${cliente._id}`}
                   className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
                 >
                   Ver
                 </Link>
+                <button
+                  onClick={() => {
+                    setClienteSeleccionado(cliente);
+                    setShowEditar(true);
+                  }}
+                  className="bg-yellow-600 text-white px-3 py-1 rounded hover:bg-yellow-700"
+                >
+                  ✏️
+                </button>
               </td>
-              <td className="px-4 py-2">
-                {cliente.creditos[0]?.tipo || '—'}
-              </td>
+
             </tr>
           ))}
         </tbody>
-
       </table>
     </div>
   );
