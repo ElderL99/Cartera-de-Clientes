@@ -1,36 +1,140 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+🧾 CRM de Clientes - Portal de Cartera
+Un sistema web de cartera de clientes con autenticación y gestión de créditos para entidades como Pemex, IMSS, Gobierno CDMX, entre otros.
 
-## Getting Started
+🚀 Tecnologías usadas
+Next.js 14 (App Router + Server Actions)
 
-First, run the development server:
+MongoDB + Mongoose
 
-```bash
+JWT para autenticación
+
+TailwindCSS (modo oscuro)
+
+Recharts (para gráficas del dashboard)
+
+Cookies + LocalStorage (manejo de sesión)
+
+📦 Instalación
+Clonar el proyecto:
+
+bash
+Copiar
+Editar
+git clone https://github.com/tu_usuario/tu_repositorio.git
+cd tu_repositorio
+Instalar dependencias:
+
+bash
+Copiar
+Editar
+npm install
+Crear archivo .env.local:
+
+ini
+Copiar
+Editar
+MONGODB_URI=mongodb+srv://<usuario>:<password>@cluster.mongodb.net/mi_crm
+JWT_SECRET=una_clave_secreta_segura
+Iniciar el servidor:
+
+bash
+Copiar
+Editar
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+🔐 Autenticación
+Login con email y contraseña
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Token guardado en LocalStorage y Cookie (para seguridad del backend)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Redirección automática si el token se borra o expira
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Rutas privadas protegidas por PrivateLayout
 
-## Learn More
+👥 Gestión de Clientes
+Campos del cliente:
+Nombre
 
-To learn more about Next.js, take a look at the following resources:
+Dirección
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Teléfono
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Convenios múltiples
 
-## Deploy on Vercel
+Tipo de retiro: Pensionado | Jubilado
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Créditos (múltiples)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Filtros:
+🔍 Buscar por nombre
+
+📑 Filtrar por tipo de crédito: Domiciliado / Nómina
+
+📎 Filtrar por convenio (Pemex, IMSS, GEM, etc.)
+
+💳 Créditos
+Cada cliente puede tener múltiples créditos.
+
+Campos de un crédito:
+
+Tipo: Domiciliado / Nómina
+
+Fecha de venta
+
+Fecha primer descuento
+
+Plazo
+
+Financiera
+
+Se pueden editar y eliminar créditos
+
+Créditos renovables:
+
+Domiciliados a los 6 meses
+
+Nómina a los 2 años
+
+📊 Dashboard
+Total de clientes
+
+Clientes con créditos
+
+Clientes renovables
+
+Pensionados
+
+Jubilados
+
+Incluye gráficas profesionales con Recharts
+
+📁 Estructura de carpetas
+bash
+Copiar
+Editar
+/app
+  /dashboard
+    /clientes
+    /[clienteId]
+    layout.jsx
+  /login
+  /register
+  /api
+    /clientes
+    /auth
+/components
+/hooks
+/lib
+/models
+/utils
+✅ Pendiente / Mejoras futuras
+Exportar datos a PDF/Excel
+
+Roles de usuarios (admin / user)
+
+Subida de documentos por cliente
+
+Notificaciones de renovación próximas
+
+👤 Desarrollado por
+Adán @LugoCabral
+💡 Proyecto personal con enfoque real en cartera de clientes con filtros, seguridad y claridad visual.
