@@ -1,27 +1,29 @@
-🧾 CRM de Clientes - Portal de Cartera
+# 🧾 CRM de Clientes - Portal de Cartera
+
 Un sistema web de cartera de clientes con autenticación y gestión de créditos para entidades como Pemex, IMSS, Gobierno CDMX, entre otros.
 
-🚀 Tecnologías usadas
-Next.js 14 (App Router + Server Actions)
+---
 
-MongoDB + Mongoose
+## 🚀 Tecnologías usadas
 
-JWT para autenticación
+- **Next.js 14 (App Router + Server Actions)**
+- **MongoDB** + Mongoose
+- **JWT para autenticación**
+- **TailwindCSS** (modo oscuro)
+- **Recharts** (para gráficas del dashboard)
+- **Cookies + LocalStorage** (manejo de sesión)
 
-TailwindCSS (modo oscuro)
+---
 
-Recharts (para gráficas del dashboard)
+## 📦 Instalación
 
-Cookies + LocalStorage (manejo de sesión)
+1. Clonar el proyecto:
 
-📦 Instalación
-Clonar el proyecto:
-
-bash
-Copiar
-Editar
+```bash
 git clone https://github.com/tu_usuario/tu_repositorio.git
 cd tu_repositorio
+
+
 Instalar dependencias:
 
 bash
@@ -30,7 +32,7 @@ Editar
 npm install
 Crear archivo .env.local:
 
-ini
+env
 Copiar
 Editar
 MONGODB_URI=mongodb+srv://<usuario>:<password>@cluster.mongodb.net/mi_crm
@@ -41,10 +43,12 @@ bash
 Copiar
 Editar
 npm run dev
+
+
 🔐 Autenticación
 Login con email y contraseña
 
-Token guardado en LocalStorage y Cookie (para seguridad del backend)
+Token guardado en LocalStorage y Cookie
 
 Redirección automática si el token se borra o expira
 
