@@ -20,26 +20,17 @@ export async function GET(req) {
 
   const query = { createdBy: user.userId };
 
-  if (nombre) {
-    query.nombre = { $regex: nombre, $options: 'i' };
-  }
-
-  if (convenio) {
-    query.convenios = convenio;
-  }
+  if (nombre) query.nombre = { $regex: nombre, $options: 'i' };
+  if (convenio) query.convenios = convenio;
 
   if (tipo || financiera) {
-    query.creditos = {
-      $elemMatch: {}
-    };
-
+    query.creditos = { $elemMatch: {} };
     if (tipo) query.creditos.$elemMatch.tipo = tipo;
     if (financiera) query.creditos.$elemMatch.financiera = financiera;
   }
 
   const clientes = await Cliente.find(query);
-
-  return Response.json(clientes, { status: 200 });
+  return Response.json({ clientes }, { status: 200 }); // ✅ estructura esperada
 }
 
 // 📝 POST: Crear nuevo cliente

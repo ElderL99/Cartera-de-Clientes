@@ -30,5 +30,5 @@ export async function GET(req) {
     });
   });
 
-  return Response.json(renovables, { status: 200 });
+  return Response.json({ clientes: renovables }, { status: 200 });
 }

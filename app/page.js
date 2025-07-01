@@ -1,8 +1,10 @@
+import { redirect } from 'next/navigation';
 
 export default function Home() {
+  
   return (
-   <div>
-    Cartera de Clientes
-   </div>
-  );
+    <div>
+      Home
+    </div>
+  )
 }

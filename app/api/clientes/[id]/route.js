@@ -2,9 +2,11 @@ import { connectDB } from '@/lib/mongo';
 import Cliente from '@/models/Cliente';
 import { verifyToken } from '@/utils/auth';
 
+
 // GET → Ver un cliente por su ID
-export async function GET(req, { params }) {
-  await connectDB();
+export async function GET(req, context) {
+  const { params } = context; // ✅ destructura correctamente
+  const id =  params.id;
 
   const token = req.headers.get('authorization')?.split(' ')[1];
   const user = verifyToken(token);
@@ -12,9 +14,11 @@ export async function GET(req, { params }) {
     return Response.json({ error: 'No autorizado' }, { status: 401 });
   }
 
+  await connectDB();
+
   try {
     const cliente = await Cliente.findOne({
-      _id: params.id,
+      _id: id,
       createdBy: user.userId
     });
 
@@ -22,11 +26,13 @@ export async function GET(req, { params }) {
       return Response.json({ error: 'Cliente no encontrado' }, { status: 404 });
     }
 
-    return Response.json(cliente, { status: 200 });
+    return Response.json({ cliente }, { status: 200 });
   } catch (error) {
     return Response.json({ error: 'ID inválido' }, { status: 400 });
   }
 }
+
+
 
 // PUT → Actualizar cliente completo
 export async function PUT(req, { params }) {
