@@ -1,19 +1,30 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login } = useAuth();
+  const { token, login, loading } = useAuth(); // agregamos `token` y `loading`
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
+  // 🔒 Si ya hay token, redirige al dashboard
+  useEffect(() => {
+    if (!loading && token) {
+      router.push('/dashboard');
+    }
+  }, [token, loading, router]);
+
+  // ⏳ Mientras carga, muestra mensaje
+  if (loading) return <p className="text-white">Verificando sesión...</p>;
+  if (token) return null; // si ya está autenticado, no muestra el form
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await login(email, password)
+      await login(email, password);
     } catch (err) {
       setError('Credenciales inválidas');
     }
