@@ -7,9 +7,11 @@ import Link from 'next/link';
 
 export default function ClientesPage() {
   const { token } = useAuth();
+  const [nombreFiltro, setNombreFiltro] = useState('');
   const [tipoFiltro, setTipoFiltro] = useState('');
   const [convenioFiltro, setConvenioFiltro] = useState('');
   const { clientes, loading, error, refetch } = useClientes(token, {
+    nombre: nombreFiltro,
     tipo: tipoFiltro,
     convenio: convenioFiltro
   });
@@ -20,6 +22,18 @@ export default function ClientesPage() {
 
   return (
     <div>
+      {/* 🔍 Búsqueda por nombre */}
+      <div className="mb-4">
+        <label className="text-sm block mb-1">Buscar por nombre:</label>
+        <input
+          type="text"
+          value={nombreFiltro}
+          onChange={(e) => setNombreFiltro(e.target.value)}
+          placeholder="Ej. Juan Pérez"
+          className="bg-[#2a2a2a] text-white px-4 py-2 rounded border border-[#444] w-full"
+        />
+      </div>
+
       {/* Filtros */}
       <div className="mb-4">
         <label className="text-sm block mb-1">Filtrar por tipo de crédito:</label>
@@ -54,7 +68,7 @@ export default function ClientesPage() {
         </select>
       </div>
 
-      {/* Título y botón */}
+      {/* Crear / Editar */}
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold">Clientes</h2>
         <button
@@ -65,7 +79,6 @@ export default function ClientesPage() {
         </button>
       </div>
 
-      {/* Crear nuevo cliente */}
       {showForm && (
         <ClienteForm
           onClose={() => setShowForm(false)}
@@ -73,7 +86,6 @@ export default function ClientesPage() {
         />
       )}
 
-      {/* Editar cliente */}
       {showEditar && clienteSeleccionado && (
         <ClienteForm
           cliente={clienteSeleccionado}
@@ -98,7 +110,6 @@ export default function ClientesPage() {
             <th className="px-4 py-2 text-left">Tipo</th>
             <th className="px-4 py-2 text-left">Tipo de Retiro</th>
             <th className="px-4 py-2 text-left">Acción</th>
-
           </tr>
         </thead>
         <tbody>
@@ -126,7 +137,6 @@ export default function ClientesPage() {
                   ✏️
                 </button>
               </td>
-
             </tr>
           ))}
         </tbody>
